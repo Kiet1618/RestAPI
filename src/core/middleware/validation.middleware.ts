@@ -10,7 +10,11 @@ const ValidationMiddleware = (type: any, skipMissingProperties: boolean): Reques
                 const messages = errors.map((error: ValidationError) => {
                     return Object.values(error.constraints!);
                 }).join(', ');
+                console.log(messages);
                 next(new HttpException(400, messages));
+            } else {
+                next();
+
             }
         })
     }
