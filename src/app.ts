@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
 import { Logger } from '@core/utils/index';
+import { errorMiddleware } from '@core/middleware';
 
 class App {
     public app: express.Application;
@@ -15,11 +16,13 @@ class App {
     constructor(routes: Route[]) {
         this.app = express();
         this.port = process.env.PORT || 5000;
-        this.production = process.env.NODE_ENV == 'production' ? true : false;;
+        this.production = process.env.NODE_ENV === 'production' ? true : false;;
 
         this.connectToDatabase();
-        this.initializeRoutes(routes);
         this.initializeMiddleware();
+        this.initializeRoutes(routes);
+        this.initializeErorMiddleware();
+
     }
     public listen() {
         this.app.listen(this.port, () => {
@@ -55,6 +58,12 @@ class App {
             this.app.use(morgan('dev'));
             this.app.use(cors({ origin: true, credentials: true }));
         }
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: true }));
+    }
+    private initializeErorMiddleware() {
+        this.app.use(errorMiddleware);
+
     }
 }
 export default App;
