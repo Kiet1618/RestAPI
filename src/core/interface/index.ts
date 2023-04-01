@@ -1,3 +1,3 @@
 import Route from './routes.interface'
-
-export { Route }
+import IPagination from './pagination.interface'
+export { Route, IPagination }

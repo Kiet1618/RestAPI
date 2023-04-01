@@ -14,7 +14,6 @@ const ValidationMiddleware = (type: any, skipMissingProperties: boolean): Reques
                 next(new HttpException(400, messages));
             } else {
                 next();
-
             }
         })
     }
