@@ -11,3 +11,10 @@
     - NodeJS
     - Express
     - MongoDB
+
+## Set up and start
+### Set up package
+    yarn
+### Run Server
+    yarn server
+    
