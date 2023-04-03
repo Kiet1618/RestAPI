@@ -34,7 +34,7 @@
     }
 ### Get Infor by id User API
 #### Request
-    Method: Get
+    Method: GET
     Route: http://localhost:5000/api/users/{id}
 #### Response
     {
