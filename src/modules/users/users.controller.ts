@@ -49,8 +49,8 @@ class UserController {
         try {
             const page: number = Number(req.params.page);
             const keyword: string = req.query.keyword?.toString() || "";
-            const users = await this.userService.getAllPaging(keyword, page);
-            res.status(200).json(users)
+            const users: IPagination<IUser> = await this.userService.getAllPaging(keyword, page);
+            res.status(200).json(users);
         } catch (err) {
             next(err);
         }

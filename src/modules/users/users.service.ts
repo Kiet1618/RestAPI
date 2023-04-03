@@ -82,7 +82,7 @@ class UserService {
 
     public async getAllPaging(keyword: string, page: number): Promise<IPagination<IUser>> {
         const pageSize: number = Number(process.env.PAGE_SIZE) || 10;
-        let query = {};
+        let query;
         if (keyword) {
             query = this.UserSchema.find({
                 $or: [
@@ -95,11 +95,21 @@ class UserService {
         else {
             query = this.UserSchema.find().sort({ date: -1 })
         }
-        const users: Array<IUser> = await query
-            .skip((page - 1) * pageSize)
-            .limit(pageSize)
-            .exec();
-        const rowCount: number = await query.countDocuments().exec();
+
+        // Use the query for the users query
+        const users: Array<IUser> = await query.skip((page - 1) * pageSize).limit(pageSize).exec();
+
+        // Create a new query instance for the count operation
+        const countQuery = keyword ? this.UserSchema.countDocuments({
+            $or: [
+                { email: keyword },
+                { frist_name: keyword },
+                { last_name: keyword }
+            ],
+        }) : this.UserSchema.countDocuments();
+
+        // Use the countQuery instance for the count operation
+        const rowCount: number = await countQuery.exec();
 
         return {
             total: rowCount,
