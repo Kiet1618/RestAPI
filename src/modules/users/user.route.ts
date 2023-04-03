@@ -18,7 +18,7 @@ class UsersRoute implements Route {
         this.router.get(this.path + '/:id', this.usersController.getUserById)
         this.router.get(this.path, this.usersController.getAll)
         this.router.get(this.path + '/paging/:page', this.usersController.getAllPaging)
-        this.router.delete(this.path, this.usersController.deleteUser)
+        this.router.delete(this.path + '/:id', this.usersController.deleteUser)
     }
 
 
