@@ -56,5 +56,14 @@ class UserController {
         }
     }
 
+    public deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const result = await this.userService.deleteUser(req.params.id);
+            res.status(200).json(result);
+        }
+        catch (err) {
+            next(err);
+        }
+    }
 }
 export default UserController;

@@ -118,6 +118,13 @@ class UserService {
             items: users,
         } as IPagination<IUser>
     }
+
+    public async deleteUser(userId: string): Promise<IUser> {
+        const deletedUser = await this.UserSchema.findByIdAndDelete(userId).exec();
+        if (!deletedUser) throw new HttpException(409, 'Your id is valid');
+        return deletedUser;
+    }
+
     private createToken(user: IUser): TokenData {
         const dataInToken: DataStoredInToken = { id: user._id };
         const secret: string = process.env.JWT_TOKEN_SECRET!;

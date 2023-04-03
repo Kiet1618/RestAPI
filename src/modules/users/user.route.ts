@@ -16,10 +16,9 @@ class UsersRoute implements Route {
         this.router.post(this.path, ValidationMiddleware(RegisterDto, true), this.usersController.register)
         this.router.put(this.path + '/:id', ValidationMiddleware(RegisterDto, true), this.usersController.updateUser)
         this.router.get(this.path + '/:id', this.usersController.getUserById)
-
         this.router.get(this.path, this.usersController.getAll)
         this.router.get(this.path + '/paging/:page', this.usersController.getAllPaging)
-
+        this.router.delete(this.path, this.usersController.deleteUser)
     }
 
 
